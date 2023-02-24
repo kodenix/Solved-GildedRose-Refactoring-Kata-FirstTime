@@ -19,23 +19,23 @@ export class Item {
       case AgedBrieItemName:
       case BackstagePassesItemName: {
         if (this.isAgedBrieOrBackstageItem()) {
-          if (this.isQualityMinor50()) {
+          if (this.haveQualityMinor50()) {
             if (!this.isBackstagePassesItem()) {
               this.incrementOneQualityLevel();
             } else {
-              if (this.isSellInMinor11AndMayorEqual6()) {
+              if (this.haveSellInMinor11AndMayorEqual6()) {
                 this.incrementTwoQualityLevel();
               }
-              if (this.isSellInMinor6()) {
+              if (this.haveSellInMinor6()) {
                 this.incrementThreeQualityLevel();
               }
             }
           }
 
-          this.restSellInDay();
+          this.restSellInOneDay();
 
-          if (this.isSellInCeroDayLeft()) {
-            if (this.isAgedBrieItem() && this.isPositiveQuality()) {
+          if (this.haveCeroDaySellInLeft()) {
+            if (this.isAgedBrieItem() && this.havePositiveQuality()) {
               this.incrementOneQualityLevel();
               break;
             } 
@@ -52,13 +52,13 @@ export class Item {
       }
       default: {
         
-        if (this.quality > 0) {
+        if (this.havePositiveQuality()) {
           this.decrementOneQualityLevel();
         }
          
-        this.restSellInDay();
+        this.restSellInOneDay();
 
-        if (this.isSellInCeroDayLeft() && this.isPositiveQuality()) {              
+        if (this.haveCeroDaySellInLeft() && this.havePositiveQuality()) {              
           this.decrementOneQualityLevel();    
         }
       }
@@ -89,32 +89,28 @@ export class Item {
     this.quality = 0;
   }
 
-  public restSellInDay() {
+  public restSellInOneDay() {
     this.sellIn = this.sellIn - 1;
   }
 
-  public isQualityMinor50(): boolean {
+  public haveQualityMinor50(): boolean {
     return this.quality < 50;
   }
 
-  public isPositiveQuality(): boolean {
+  public havePositiveQuality(): boolean {
     return this.quality > 0;
   }
 
-  public isSellInCeroDayLeft(): boolean {
+  public haveCeroDaySellInLeft(): boolean {
     return this.sellIn < 0;
   }
   
-  public isSellInMinor6(): boolean {
+  public haveSellInMinor6(): boolean {
     return this.sellIn < 6;
   }
 
-  public isSellInMinor11AndMayorEqual6(): boolean {
+  public haveSellInMinor11AndMayorEqual6(): boolean {
     return this.sellIn >= 6 && this.sellIn < 11;
-  }
-
-  public isNotAgedBrieOrBackstageItem(): boolean {
-    return this.name != AgedBrieItemName && this.name != BackstagePassesItemName;
   }
 
   public isAgedBrieOrBackstageItem(): boolean {
