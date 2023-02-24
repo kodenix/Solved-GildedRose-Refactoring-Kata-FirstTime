@@ -1,4 +1,4 @@
-import { GenericItem } from "./Item";
+import { GenericItem } from "./GenericItem";
 import { AbstractItem } from "./AbstractItem";
 
 export class GildedRose {

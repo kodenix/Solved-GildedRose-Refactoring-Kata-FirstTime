@@ -1,7 +1,6 @@
 import { AbstractItem, AgedBrieItemName, BackstagePassesItemName } from "./AbstractItem";
 
-
-export class MagicItems extends AbstractItem {
+export class AgedBrieItem extends AbstractItem {
 
   constructor(sellIn, quality) {
     const name = AgedBrieItemName
