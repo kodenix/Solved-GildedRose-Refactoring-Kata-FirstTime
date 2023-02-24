@@ -16,69 +16,55 @@ export abstract class AbstractItem {
   public updateQuality() {
     this.updateQualityMain();
   }
+
   protected abstract updateQualityMain();
 
-  public incrementQualityLevel(level: number) {
+  protected incrementQualityLevel(level: number) {
     this.quality = this.quality + level;
   }
 
-  public incrementOneQualityLevel() {
+  protected incrementOneQualityLevel() {
     this.incrementQualityLevel(1);
   }
 
-  public incrementTwoQualityLevel() {
+  protected incrementTwoQualityLevel() {
     this.incrementQualityLevel(2);
   }
 
-  public incrementThreeQualityLevel() {
+  protected incrementThreeQualityLevel() {
     this.incrementQualityLevel(3);
   }
 
-  public decrementOneQualityLevel() {
+  protected decrementOneQualityLevel() {
     this.quality = this.quality - 1;
   }
 
-  public lostAllQuality() {
+  protected lostAllQuality() {
     this.quality = 0;
   }
 
-  public restSellInOneDay() {
+  protected restSellInOneDay() {
     this.sellIn = this.sellIn - 1;
   }
 
-  public haveQualityMinor50(): boolean {
+  protected haveQualityMinor50(): boolean {
     return this.quality < 50;
   }
 
-  public havePositiveQuality(): boolean {
+  protected havePositiveQuality(): boolean {
     return this.quality > 0;
   }
 
-  public haveCeroDaySellInLeft(): boolean {
+  protected haveCeroDaySellInLeft(): boolean {
     return this.sellIn < 0;
   }
 
-  public haveSellInMinor6(): boolean {
+  protected haveSellInMinor6(): boolean {
     return this.sellIn < 6;
   }
 
-  public haveSellInMinor11AndMayorEqual6(): boolean {
+  protected haveSellInMinor11AndMayorEqual6(): boolean {
     return this.sellIn >= 6 && this.sellIn < 11;
   }
 
-  public isAgedBrieOrBackstageItem(): boolean {
-    return this.name === AgedBrieItemName || this.name === BackstagePassesItemName;
-  }
-
-  public isBackstagePassesItem(): boolean {
-    return this.name == BackstagePassesItemName;
-  }
-
-  public isAgedBrieItem(): boolean {
-    return this.name == AgedBrieItemName;
-  }
-
-  public isSulfurasItem(): boolean {
-    return this.name === SulfurasItemName;
-  }
 }
