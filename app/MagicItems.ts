@@ -13,10 +13,15 @@ export class MagicItems extends AbstractItem {
   }
 
   public updateQualityMain() {
-    if (this.haveQualityMinor50()) {
-      if (!this.isBackstagePassesItem()) {
+    
+    if (this.isAgedBrieItem()) {
+      if (this.haveQualityMinor50()) {
         this.incrementOneQualityLevel();
-      } else {
+      }
+    } 
+    
+    if (this.isBackstagePassesItem()) {
+      if (this.haveQualityMinor50()) {
         if (this.haveSellInMinor11AndMayorEqual6()) {
           this.incrementTwoQualityLevel();
         }
@@ -38,8 +43,6 @@ export class MagicItems extends AbstractItem {
         this.lostAllQuality();
         return;
       }
-
-
     }
   }
 
