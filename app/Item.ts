@@ -15,6 +15,10 @@ export class Item {
 
   public updateQuality() { }
 
+  public restSellInDay() {
+    this.sellIn = this.sellIn - 1;
+  }
+
   public isQualityMinor50(): boolean {
     return this.quality < 50;
   }

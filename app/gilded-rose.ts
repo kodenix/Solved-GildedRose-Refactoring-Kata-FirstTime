@@ -11,25 +11,27 @@ export class GildedRose {
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i];
 
-      
-      
-      if (!item.isAgedBrieOrBackstageItem()) {
-        if (item.quality > 0 && !item.isSulfurasItem()) {
-          item.quality = item.quality - 1;
-        }
-      } 
-      
-      if (item.isAgedBrieOrBackstageItem() && item.isQualityMinor50()) {
+      if (item.isSulfurasItem()) {
+
+      } else {
+        if (!item.isAgedBrieOrBackstageItem()) {
+          if (item.quality > 0) {
+            item.quality = item.quality - 1;
+          }
+        } 
+        
+        if (item.isAgedBrieOrBackstageItem() && item.isQualityMinor50()) {
           this.processNotGenericAndWithQualityMinor50(item);
-      }
-      
-      if (!item.isSulfurasItem()) {
-        item.sellIn = item.sellIn - 1;
-      }
-  
-      if (item.isBadSellInDate()) {
-        this.processWithisBadSellInDate(item);    
-      }
+        }
+        
+        if (!item.isSulfurasItem()) {
+          item.restSellInDay();
+        }
+    
+        if (item.isBadSellInDate()) {
+          this.processWithisBadSellInDate(item);    
+        }
+      }      
     }
 
     return this.items;
@@ -58,11 +60,11 @@ export class GildedRose {
     } 
       
     if (item.isBackstagePassesItem()) {
-      item.quality = item.quality - item.quality;
+      item.quality = 0;
       return;
     }
     
-    if (item.isPositiveQuality() && !item.isSulfurasItem()) {
+    if (item.isPositiveQuality()) {
         item.quality = item.quality - 1;
     }
     
