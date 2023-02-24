@@ -17,65 +17,6 @@ export abstract class AbstractItem {
     this.updateQualityMain()
   }
   protected abstract updateQualityMain();
-}
-
-export class Item extends AbstractItem {
-  
-  constructor(name, sellIn, quality) {
-    super(name, sellIn, quality);
-  }
-
-  public updateQualityMain() {
-    switch (this.name) {
-      case SulfurasItemName: break;
-      case AgedBrieItemName:
-      case BackstagePassesItemName: {
-        if (this.isAgedBrieOrBackstageItem()) {
-          if (this.haveQualityMinor50()) {
-            if (!this.isBackstagePassesItem()) {
-              this.incrementOneQualityLevel();
-            } else {
-              if (this.haveSellInMinor11AndMayorEqual6()) {
-                this.incrementTwoQualityLevel();
-              }
-              if (this.haveSellInMinor6()) {
-                this.incrementThreeQualityLevel();
-              }
-            }
-          }
-
-          this.restSellInOneDay();
-
-          if (this.haveCeroDaySellInLeft()) {
-            if (this.isAgedBrieItem() && this.havePositiveQuality()) {
-              this.incrementOneQualityLevel();
-              break;
-            } 
-              
-            if (this.isBackstagePassesItem()) {
-              this.lostAllQuality();
-              break;
-            }
-            
-            
-          }
-        }
-        break;
-      }
-      default: {
-        
-        if (this.havePositiveQuality()) {
-          this.decrementOneQualityLevel();
-        }
-         
-        this.restSellInOneDay();
-
-        if (this.haveCeroDaySellInLeft() && this.havePositiveQuality()) {              
-          this.decrementOneQualityLevel();    
-        }
-      }
-    }
-  }
 
   public incrementQualityLevel(level: number) {
     this.quality = this.quality + level;
@@ -141,3 +82,66 @@ export class Item extends AbstractItem {
     return this.name === SulfurasItemName;
   }
 }
+
+export class Item extends AbstractItem {
+  
+  constructor(name, sellIn, quality) {
+    super(name, sellIn, quality);
+  }
+
+  public updateQualityMain() {
+    switch (this.name) {
+      case SulfurasItemName: break;
+      case AgedBrieItemName:
+      case BackstagePassesItemName: {
+        if (this.isAgedBrieOrBackstageItem()) {
+          if (this.haveQualityMinor50()) {
+            if (!this.isBackstagePassesItem()) {
+              this.incrementOneQualityLevel();
+            } else {
+              if (this.haveSellInMinor11AndMayorEqual6()) {
+                this.incrementTwoQualityLevel();
+              }
+              if (this.haveSellInMinor6()) {
+                this.incrementThreeQualityLevel();
+              }
+            }
+          }
+
+          this.restSellInOneDay();
+
+          if (this.haveCeroDaySellInLeft()) {
+            if (this.isAgedBrieItem() && this.havePositiveQuality()) {
+              this.incrementOneQualityLevel();
+              break;
+            } 
+              
+            if (this.isBackstagePassesItem()) {
+              this.lostAllQuality();
+              break;
+            }
+            
+            
+          }
+        }
+        break;
+      }
+      default: {
+        
+        if (this.havePositiveQuality()) {
+          this.decrementOneQualityLevel();
+        }
+         
+        this.restSellInOneDay();
+
+        if (this.haveCeroDaySellInLeft() && this.havePositiveQuality()) {              
+          this.decrementOneQualityLevel();    
+        }
+      }
+    }
+  }
+
+  
+}
+
+
