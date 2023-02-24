@@ -2,18 +2,30 @@ const AgedBrieItemName = 'Aged Brie';
 const BackstagePassesItemName = 'Backstage passes to a TAFKAL80ETC concert';
 const SulfurasItemName='Sulfuras, Hand of Ragnaros';
 
-export class Item {
-  name: string;
-  sellIn: number;
-  quality: number;
+export abstract class AbstractItem {
+  public name: string;
+  public sellIn: number;
+  public quality: number;
 
   constructor(name, sellIn, quality) {
     this.name = name;
     this.sellIn = sellIn;
     this.quality = quality;
   }
-
+  
   public updateQuality() {
+    this.updateQualityMain()
+  }
+  protected abstract updateQualityMain();
+}
+
+export class Item extends AbstractItem {
+  
+  constructor(name, sellIn, quality) {
+    super(name, sellIn, quality);
+  }
+
+  public updateQualityMain() {
     switch (this.name) {
       case SulfurasItemName: break;
       case AgedBrieItemName:

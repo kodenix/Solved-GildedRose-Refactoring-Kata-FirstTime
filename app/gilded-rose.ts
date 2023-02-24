@@ -1,7 +1,7 @@
-import { Item } from "./Item";
+import { AbstractItem, Item } from "./Item";
 
 export class GildedRose {
-  items: Array<Item>;
+  items: Array<AbstractItem>;
 
   constructor(items = [] as Array<Item>) {
     this.items = items;
