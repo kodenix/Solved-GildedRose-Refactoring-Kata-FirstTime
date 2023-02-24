@@ -42,22 +42,16 @@ export class GildedRose {
   private processNotGenericAndWithQualityMinor50(item: Item) {
     item.quality = item.quality + 1;
     if (this.isBackstagePassesItem(item) && item.isQualityMinor50()) {
-      if (this.isSellInMinor11(item)) {
+      if (item.isSellInMinor11()) {
         item.quality = item.quality + 1;
       }
-      if (this.isSellInMinor6(item)) {
+      if (item.isSellInMinor6()) {
         item.quality = item.quality + 1;
       }
     }
   }
 
-  private isSellInMinor6(item: Item) {
-    return item.sellIn < 6;
-  }
-
-  private isSellInMinor11(item: Item) {
-    return item.sellIn < 11;
-  }
+  
 
   private processWithisBadSellInDate(item: Item) {
     if (this.isAgedBrieItem(item)) {
@@ -93,10 +87,6 @@ export class GildedRose {
 
   private isSulfurasItem(item) {
     return item.name === SulfurasItemName;
-  }
-
-  private isPositiveQuality(item: Item) {
-    return item.quality > 0;
   }
 
 }
