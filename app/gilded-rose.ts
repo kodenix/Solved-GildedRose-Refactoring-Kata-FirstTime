@@ -12,6 +12,7 @@ export class Item {
 
 const AgedBrieItemName = 'Aged Brie';
 const BackstagePassesItemName = 'Backstage passes to a TAFKAL80ETC concert';
+const SulfurasItemName='Sulfuras, Hand of Ragnaros';
 
 export class GildedRose {
   items: Array<Item>;
@@ -22,59 +23,63 @@ export class GildedRose {
 
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
-      const currentItem = this.items[i];
-      this.process(currentItem);
+      this.updateQualityItem(this.items[i]);
     }
 
     return this.items;
   }
 
-  private process(item: Item) {
+  private updateQualityItem(item: Item) {
     if (this.isGenericItem(item)) {
-      if (item.quality > 0 && item.name != 'Sulfuras, Hand of Ragnaros') {
+      if (item.quality > 0 && item.name != SulfurasItemName) {
         item.quality = item.quality - 1;
       }
     } 
     
-    if (!this.isGenericItem(item)) {
-      if (this.isQualityMinor50(item)) {
-        item.quality = item.quality + 1;
-        if (item.name == BackstagePassesItemName) {
-          if (item.sellIn < 11 && this.isQualityMinor50(item)) {
-            item.quality = item.quality + 1;
-          }
-          if (item.sellIn < 6 && this.isQualityMinor50(item)) {
-            item.quality = item.quality + 1;
-          }
-        }
-      }
+    if (!this.isGenericItem(item) && this.isQualityMinor50(item)) {
+        this.processNotGenericAndWithQualityMinor50(item);
     }
     
-    if (item.name != 'Sulfuras, Hand of Ragnaros') {
+    if (item.name != SulfurasItemName) {
       item.sellIn = item.sellIn - 1;
     }
 
     if (this.isBadSellInDate(item)) {
-      if (this.isAgedBrieItem(item)) {
-        if (this.isQualityMinor50(item)) {
-          item.quality = item.quality + 1;
-        }
-      } else {
-        if (item.name == BackstagePassesItemName) {
-          item.quality = item.quality - item.quality;
-          return;
-        }
-        if (this.isPositiveQuality(item)) {
-          if (item.name != 'Sulfuras, Hand of Ragnaros') {
-            item.quality = item.quality - 1;
-          }
+      this.processWithisBadSellInDate(item);    
+    }
+  }
+  
+  private processNotGenericAndWithQualityMinor50(item: Item) {
+    item.quality = item.quality + 1;
+    if (item.name == BackstagePassesItemName) {
+      if (item.sellIn < 11 && this.isQualityMinor50(item)) {
+        item.quality = item.quality + 1;
+      }
+      if (item.sellIn < 6 && this.isQualityMinor50(item)) {
+        item.quality = item.quality + 1;
+      }
+    }
+  }
+
+  private processWithisBadSellInDate(item: Item) {
+    if (this.isAgedBrieItem(item)) {
+      if (this.isQualityMinor50(item)) {
+        item.quality = item.quality + 1;
+      }
+    } else {
+      if (item.name == BackstagePassesItemName) {
+        item.quality = item.quality - item.quality;
+        return;
+      }
+      if (this.isPositiveQuality(item)) {
+        if (item.name != SulfurasItemName) {
+          item.quality = item.quality - 1;
         }
       }
     }
   }
 
   private isAgedBrieItem(item: Item) {
-    ;
     return item.name == AgedBrieItemName;
   }
 
