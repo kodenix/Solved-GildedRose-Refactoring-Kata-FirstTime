@@ -1,5 +1,6 @@
 import { GildedRose } from '@/gilded-rose';
-import { GenericItem, MagicItems, SulfurasItem } from "@/Item";
+import { GenericItem, SulfurasItem } from "@/Item";
+import { MagicItems } from "@/MagicItems";
 
 describe('Gilded Rose', () => {
   it('should foo', () => {
