@@ -10,6 +10,9 @@ export class Item {
   }
 }
 
+const AgedBrieItemName = 'Aged Brie';
+const BackstagePassesItemName = 'Backstage passes to a TAFKAL80ETC concert';
+
 export class GildedRose {
   items: Array<Item>;
 
@@ -34,13 +37,13 @@ export class GildedRose {
     } 
     
     if (!this.isGenericItem(item)) {
-      if (item.quality < 50) {
+      if (this.isQualityMinor50(item)) {
         item.quality = item.quality + 1;
-        if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
-          if (item.sellIn < 11 && item.quality < 50) {
+        if (item.name == BackstagePassesItemName) {
+          if (item.sellIn < 11 && this.isQualityMinor50(item)) {
             item.quality = item.quality + 1;
           }
-          if (item.sellIn < 6 && item.quality < 50) {
+          if (item.sellIn < 6 && this.isQualityMinor50(item)) {
             item.quality = item.quality + 1;
           }
         }
@@ -51,17 +54,17 @@ export class GildedRose {
       item.sellIn = item.sellIn - 1;
     }
 
-    if (item.sellIn < 0) {
-      if (item.name == 'Aged Brie') {
-        if (item.quality < 50) {
+    if (this.isBadSellInDate(item)) {
+      if (this.isAgedBrieItem(item)) {
+        if (this.isQualityMinor50(item)) {
           item.quality = item.quality + 1;
         }
       } else {
-        if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
+        if (item.name == BackstagePassesItemName) {
           item.quality = item.quality - item.quality;
           return;
         }
-        if (item.quality > 0) {
+        if (this.isPositiveQuality(item)) {
           if (item.name != 'Sulfuras, Hand of Ragnaros') {
             item.quality = item.quality - 1;
           }
@@ -70,7 +73,24 @@ export class GildedRose {
     }
   }
 
+  private isAgedBrieItem(item: Item) {
+    ;
+    return item.name == AgedBrieItemName;
+  }
+
+  private isQualityMinor50(item: Item) {
+    return item.quality < 50;
+  }
+
+  private isPositiveQuality(item: Item) {
+    return item.quality > 0;
+  }
+
+  private isBadSellInDate(item: Item) {
+    return item.sellIn < 0;
+  }
+
   private isGenericItem(item: Item) {
-    return item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert';
+    return item.name != AgedBrieItemName && item.name != BackstagePassesItemName;
   }
 }
