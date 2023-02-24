@@ -9,30 +9,27 @@ export class GildedRose {
 
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
-      this.updateQualityItem(this.items[i]);
+      const item = this.items[i];
+      if (item.isNotAgedBrieOrBackstageItem()) {
+        if (item.quality > 0 && !item.isSulfurasItem()) {
+          item.quality = item.quality - 1;
+        }
+      } 
+      
+      if (!item.isNotAgedBrieOrBackstageItem() && item.isQualityMinor50()) {
+          this.processNotGenericAndWithQualityMinor50(item);
+      }
+      
+      if (!item.isSulfurasItem()) {
+        item.sellIn = item.sellIn - 1;
+      }
+  
+      if (item.isBadSellInDate()) {
+        this.processWithisBadSellInDate(item);    
+      }
     }
 
     return this.items;
-  }
-
-  private updateQualityItem(item: Item) {
-    if (item.isNotAgedBrieOrBackstageItem()) {
-      if (item.quality > 0 && !item.isSulfurasItem()) {
-        item.quality = item.quality - 1;
-      }
-    } 
-    
-    if (!item.isNotAgedBrieOrBackstageItem() && item.isQualityMinor50()) {
-        this.processNotGenericAndWithQualityMinor50(item);
-    }
-    
-    if (!item.isSulfurasItem()) {
-      item.sellIn = item.sellIn - 1;
-    }
-
-    if (item.isBadSellInDate()) {
-      this.processWithisBadSellInDate(item);    
-    }
   }
   
   private processNotGenericAndWithQualityMinor50(item: Item) {
