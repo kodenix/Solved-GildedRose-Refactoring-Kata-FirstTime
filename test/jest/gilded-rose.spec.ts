@@ -93,8 +93,8 @@ describe('Una "Entrada al Backstage",', () => {
   describe('si faltan 10 días o menos para el concierto', () => {
     it('la calidad se incrementa en 2 unidades', () => {
       const gildedRose = new GildedRose([
-        new MagicItems(name, 10, 5),
-        new MagicItems(name, 6, 5)
+        new MagicItems(10, 5),
+        new MagicItems(6, 5)
       ]);
       const items = gildedRose.updateQuality();
       expect(items[0].quality).toBe(7);
@@ -106,7 +106,7 @@ describe('Una "Entrada al Backstage",', () => {
   
   describe('si faltan 5 días o menos, la calidad', () => {
     it('la calidad se incrementa en 3 unidades', () => {
-      const gildedRose = new GildedRose([new MagicItems(name, 5, 5), new MagicItems(name, 1, 5)]);
+      const gildedRose = new GildedRose([new MagicItems(5, 5), new MagicItems(1, 5)]);
       const items = gildedRose.updateQuality();
       expect(items[0].quality).toBe(8);
       expect(items[1].quality).toBe(8);
@@ -115,7 +115,7 @@ describe('Una "Entrada al Backstage",', () => {
 
   describe('luego de la fecha de venta",', () => {
     it('la calidad cae a 0', () => {
-      const gildedRose = new GildedRose([new MagicItems(name, 0, 50)]);
+      const gildedRose = new GildedRose([new MagicItems(0, 50)]);
       const items = gildedRose.updateQuality();
       expect(items[0].quality).toBe(0);
     });
