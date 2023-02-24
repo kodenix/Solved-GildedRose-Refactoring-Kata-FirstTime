@@ -8,6 +8,20 @@ export class Item {
     this.sellIn = sellIn;
     this.quality = quality;
   }
+
+  public updateQuality() {}
+
+  public isQualityMinor50() {
+    return this.quality < 50;
+  }
+
+  public isPositiveQuality() {
+    return this.quality > 0;
+  }
+
+  public isBadSellInDate() {
+    return this.sellIn < 0;
+  }
 }
 
 const AgedBrieItemName = 'Aged Brie';
@@ -30,72 +44,83 @@ export class GildedRose {
   }
 
   private updateQualityItem(item: Item) {
-    if (this.isGenericItem(item)) {
-      if (item.quality > 0 && item.name != SulfurasItemName) {
+    if (this.isNotAgedBrieOrBackstageItem(item)) {
+      if (item.quality > 0 && !this.isSulfurasItem(item)) {
         item.quality = item.quality - 1;
       }
     } 
     
-    if (!this.isGenericItem(item) && this.isQualityMinor50(item)) {
+    if (!this.isNotAgedBrieOrBackstageItem(item) && item.isQualityMinor50()) {
         this.processNotGenericAndWithQualityMinor50(item);
     }
     
-    if (item.name != SulfurasItemName) {
+    if (!this.isSulfurasItem(item)) {
       item.sellIn = item.sellIn - 1;
     }
 
-    if (this.isBadSellInDate(item)) {
+    if (item.isBadSellInDate()) {
       this.processWithisBadSellInDate(item);    
     }
   }
   
   private processNotGenericAndWithQualityMinor50(item: Item) {
     item.quality = item.quality + 1;
-    if (item.name == BackstagePassesItemName) {
-      if (item.sellIn < 11 && this.isQualityMinor50(item)) {
+    if (this.isBackstagePassesItem(item) && item.isQualityMinor50()) {
+      if (this.isSellInMinor11(item)) {
         item.quality = item.quality + 1;
       }
-      if (item.sellIn < 6 && this.isQualityMinor50(item)) {
+      if (this.isSellInMinor6(item)) {
         item.quality = item.quality + 1;
       }
     }
   }
 
+  private isSellInMinor6(item: Item) {
+    return item.sellIn < 6;
+  }
+
+  private isSellInMinor11(item: Item) {
+    return item.sellIn < 11;
+  }
+
   private processWithisBadSellInDate(item: Item) {
     if (this.isAgedBrieItem(item)) {
-      if (this.isQualityMinor50(item)) {
+      if (item.isQualityMinor50()) {
         item.quality = item.quality + 1;
       }
-    } else {
-      if (item.name == BackstagePassesItemName) {
-        item.quality = item.quality - item.quality;
-        return;
-      }
-      if (this.isPositiveQuality(item)) {
-        if (item.name != SulfurasItemName) {
-          item.quality = item.quality - 1;
-        }
-      }
+      return;
+    } 
+      
+    if (this.isBackstagePassesItem(item)) {
+      item.quality = item.quality - item.quality;
+      return;
     }
+    
+    if (item.isPositiveQuality() && !this.isSulfurasItem(item)) {
+        item.quality = item.quality - 1;
+    }
+    
+  }
+  
+
+  private isNotAgedBrieOrBackstageItem(item: Item) {
+    return item.name != AgedBrieItemName && item.name != BackstagePassesItemName;
+  }
+
+  private isBackstagePassesItem(item: Item) {
+    return item.name == BackstagePassesItemName
   }
 
   private isAgedBrieItem(item: Item) {
     return item.name == AgedBrieItemName;
   }
 
-  private isQualityMinor50(item: Item) {
-    return item.quality < 50;
+  private isSulfurasItem(item) {
+    return item.name === SulfurasItemName;
   }
 
   private isPositiveQuality(item: Item) {
     return item.quality > 0;
   }
 
-  private isBadSellInDate(item: Item) {
-    return item.sellIn < 0;
-  }
-
-  private isGenericItem(item: Item) {
-    return item.name != AgedBrieItemName && item.name != BackstagePassesItemName;
-  }
 }
