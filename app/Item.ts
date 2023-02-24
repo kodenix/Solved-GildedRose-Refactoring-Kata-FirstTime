@@ -1,3 +1,7 @@
+const AgedBrieItemName = 'Aged Brie';
+const BackstagePassesItemName = 'Backstage passes to a TAFKAL80ETC concert';
+const SulfurasItemName='Sulfuras, Hand of Ragnaros';
+
 export class Item {
   name: string;
   sellIn: number;
@@ -29,5 +33,21 @@ export class Item {
 
   public isSellInMinor11(): boolean {
     return this.sellIn < 11;
+  }
+
+  public isNotAgedBrieOrBackstageItem(): boolean {
+    return this.name != AgedBrieItemName && this.name != BackstagePassesItemName;
+  }
+
+  public isBackstagePassesItem(): boolean {
+    return this.name == BackstagePassesItemName
+  }
+
+  public isAgedBrieItem(): boolean {
+    return this.name == AgedBrieItemName;
+  }
+
+  public isSulfurasItem(): boolean {
+    return this.name === SulfurasItemName;
   }
 }
