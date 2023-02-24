@@ -1,5 +1,9 @@
 import { Item } from "./Item";
 
+const AgedBrieItemName = 'Aged Brie';
+const BackstagePassesItemName = 'Backstage passes to a TAFKAL80ETC concert';
+const SulfurasItemName='Sulfuras, Hand of Ragnaros';
+
 export class GildedRose {
   items: Array<Item>;
 
@@ -11,27 +15,43 @@ export class GildedRose {
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i];
 
-      if (item.isSulfurasItem()) {
-
-      } else {
-        if (!item.isAgedBrieOrBackstageItem()) {
-          if (item.quality > 0) {
-            item.quality = item.quality - 1;
+      switch (item.name) {
+        case SulfurasItemName: break;
+        default: {
+          if (!item.isAgedBrieOrBackstageItem()) {
+            if (item.quality > 0) {
+              item.quality = item.quality - 1;
+            }
+          } 
+          
+          if (item.isAgedBrieOrBackstageItem() && item.isQualityMinor50()) {
+            this.processNotGenericAndWithQualityMinor50(item);
           }
-        } 
-        
-        if (item.isAgedBrieOrBackstageItem() && item.isQualityMinor50()) {
-          this.processNotGenericAndWithQualityMinor50(item);
-        }
-        
-        if (!item.isSulfurasItem()) {
+          
+          
           item.restSellInDay();
+          
+      
+          if (item.isSellInCeroDayLeft()) {
+            if (item.isAgedBrieItem()) {
+              if (item.isQualityMinor50()) {
+                item.quality = item.quality + 1;
+              }
+              continue;
+            } 
+              
+            if (item.isBackstagePassesItem()) {
+              item.quality = 0;
+              continue;
+            }
+            
+            if (item.isPositiveQuality()) {
+                item.quality = item.quality - 1;
+            }    
+          }
         }
-    
-        if (item.isBadSellInDate()) {
-          this.processWithisBadSellInDate(item);    
-        }
-      }      
+      }
+  
     }
 
     return this.items;
@@ -51,7 +71,7 @@ export class GildedRose {
 
   
 
-  private processWithisBadSellInDate(item: Item) {
+  /*private processWithisBadSellInDate(item: Item) {
     if (item.isAgedBrieItem()) {
       if (item.isQualityMinor50()) {
         item.quality = item.quality + 1;
@@ -68,6 +88,6 @@ export class GildedRose {
         item.quality = item.quality - 1;
     }
     
-  }
+  }*/
 
 }

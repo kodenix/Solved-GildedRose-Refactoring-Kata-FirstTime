@@ -27,7 +27,7 @@ export class Item {
     return this.quality > 0;
   }
 
-  public isBadSellInDate(): boolean {
+  public isSellInCeroDayLeft(): boolean {
     return this.sellIn < 0;
   }
   
