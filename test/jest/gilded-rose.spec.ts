@@ -1,7 +1,7 @@
 import { GildedRose } from '@/gilded-rose';
 import { GenericItem } from "@/Item";
 import { SulfurasItem } from "@/SulfurasItem";
-import { MagicItems } from "@/MagicItems";
+import { AgedBrieItems, MagicItems } from "@/MagicItems";
 
 describe('Gilded Rose', () => {
   it('should foo', () => {
@@ -66,13 +66,13 @@ describe('La calidad de un artículo', () => {
 describe('El "Queso Brie envejecido" (Aged brie)', () => {
   
   it('Su calidad aumenta en 1 unidad', () => {
-    const gildedRose = new GildedRose([new MagicItems('Aged Brie', 10, 5)]);
+    const gildedRose = new GildedRose([new AgedBrieItems(10, 5)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(6);
   });
 
   it('luego de la fecha de venta su calidad aumenta 2 unidades por día', () => {
-    const gildedRose = new GildedRose([new MagicItems('Aged Brie', 0, 5)]);
+    const gildedRose = new GildedRose([new AgedBrieItems(0, 5)]);
     const items = gildedRose.updateQuality();
     expect(items[0].quality).toBe(7);
   });

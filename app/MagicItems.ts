@@ -18,6 +18,15 @@ export class MagicItems extends AbstractItem {
       if (this.haveQualityMinor50()) {
         this.incrementOneQualityLevel();
       }
+
+      this.restSellInOneDay();
+
+      if (this.haveCeroDaySellInLeft()) {
+        if (this.havePositiveQuality()) {
+          this.incrementOneQualityLevel(); 
+        }
+      }
+
     } 
     
     if (this.isBackstagePassesItem()) {
@@ -29,21 +38,36 @@ export class MagicItems extends AbstractItem {
           this.incrementThreeQualityLevel();
         }
       }
+
+      this.restSellInOneDay();
+
+      if (this.haveCeroDaySellInLeft()) {
+        this.lostAllQuality();
+      }
+
+    }
+
+  }
+}
+
+export class AgedBrieItems extends AbstractItem {
+
+  constructor(sellIn, quality) {
+    const name = AgedBrieItemName;
+    super(name, sellIn, quality);
+  }
+
+  public updateQualityMain() {
+    if (this.haveQualityMinor50()) {
+      this.incrementOneQualityLevel();
     }
 
     this.restSellInOneDay();
 
     if (this.haveCeroDaySellInLeft()) {
-      if (this.isAgedBrieItem() && this.havePositiveQuality()) {
-        this.incrementOneQualityLevel();
-        return;
-      }
-
-      if (this.isBackstagePassesItem()) {
-        this.lostAllQuality();
-        return;
+      if (this.havePositiveQuality()) {
+        this.incrementOneQualityLevel(); 
       }
     }
   }
-
 }
