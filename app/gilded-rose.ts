@@ -1,7 +1,5 @@
 import { Item } from "./Item";
 
-const SulfurasItemName='Sulfuras, Hand of Ragnaros';
-
 export class GildedRose {
   items: Array<Item>;
 
@@ -19,7 +17,7 @@ export class GildedRose {
 
   private updateQualityItem(item: Item) {
     if (item.isNotAgedBrieOrBackstageItem()) {
-      if (item.quality > 0 && !this.isSulfurasItem(item)) {
+      if (item.quality > 0 && !item.isSulfurasItem()) {
         item.quality = item.quality - 1;
       }
     } 
@@ -28,7 +26,7 @@ export class GildedRose {
         this.processNotGenericAndWithQualityMinor50(item);
     }
     
-    if (!this.isSulfurasItem(item)) {
+    if (!item.isSulfurasItem()) {
       item.sellIn = item.sellIn - 1;
     }
 
@@ -64,15 +62,10 @@ export class GildedRose {
       return;
     }
     
-    if (item.isPositiveQuality() && !this.isSulfurasItem(item)) {
+    if (item.isPositiveQuality() && !item.isSulfurasItem()) {
         item.quality = item.quality - 1;
     }
     
-  }
-  
-
-  private isSulfurasItem(item) {
-    return item.name === SulfurasItemName;
   }
 
 }
