@@ -51,10 +51,8 @@ export class GildedRose {
 
           item.restSellInDay();
 
-          if (item.isSellInCeroDayLeft()) {              
-            if (item.isPositiveQuality()) {
-                item.quality = item.quality - 1;
-            }    
+          if (item.isSellInCeroDayLeft() && item.isPositiveQuality()) {              
+            item.quality = item.quality - 1;    
           }
         }
       }
