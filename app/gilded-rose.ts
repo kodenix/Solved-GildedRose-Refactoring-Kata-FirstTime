@@ -1,9 +1,9 @@
-import { AbstractItem, Item } from "./Item";
+import { AbstractItem, GenericItem } from "./Item";
 
 export class GildedRose {
   items: Array<AbstractItem>;
 
-  constructor(items = [] as Array<Item>) {
+  constructor(items = [] as Array<GenericItem>) {
     this.items = items;
   }
 
