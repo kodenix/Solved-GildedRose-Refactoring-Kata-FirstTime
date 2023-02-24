@@ -28,12 +28,12 @@ export class GildedRose {
 
             if (item.isSellInCeroDayLeft()) {
               if (item.isAgedBrieItem() && item.isPositiveQuality()) {
-                item.quality = item.quality + 1;
+                item.incrementOneQualityLevel();
                 continue;
               } 
                 
               if (item.isBackstagePassesItem()) {
-                item.quality = 0;
+                item.lostAllQuality();
                 continue;
               }
               
@@ -45,14 +45,13 @@ export class GildedRose {
         default: {
           
           if (item.quality > 0) {
-            item.quality = item.quality - 1;
+            item.decrementOneQualityLevel();
           }
            
-
           item.restSellInDay();
 
           if (item.isSellInCeroDayLeft() && item.isPositiveQuality()) {              
-            item.quality = item.quality - 1;    
+            item.decrementOneQualityLevel();    
           }
         }
       }
@@ -63,13 +62,13 @@ export class GildedRose {
   }
   
   private processNotGenericAndWithQualityMinor50(item: Item) {
-    item.quality = item.quality + 1;
+    item.incrementOneQualityLevel();
     if (item.isBackstagePassesItem() && item.isQualityMinor50()) {
       if (item.isSellInMinor11()) {
-        item.quality = item.quality + 1;
+        item.incrementOneQualityLevel();
       }
       if (item.isSellInMinor6()) {
-        item.quality = item.quality + 1;
+        item.incrementOneQualityLevel();
       }
     }
   }

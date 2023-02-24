@@ -15,6 +15,18 @@ export class Item {
 
   public updateQuality() { }
 
+  public incrementOneQualityLevel() {
+    this.quality = this.quality + 1;
+  }
+  
+  public decrementOneQualityLevel() {
+    this.quality = this.quality - 1
+  }
+  
+  public lostAllQuality() {
+    this.quality = 0;
+  }
+
   public restSellInDay() {
     this.sellIn = this.sellIn - 1;
   }
