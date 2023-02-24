@@ -39,6 +39,10 @@ export class Item {
     return this.name != AgedBrieItemName && this.name != BackstagePassesItemName;
   }
 
+  public isAgedBrieOrBackstageItem(): boolean {
+    return this.name === AgedBrieItemName || this.name === BackstagePassesItemName;
+  }
+
   public isBackstagePassesItem(): boolean {
     return this.name == BackstagePassesItemName
   }

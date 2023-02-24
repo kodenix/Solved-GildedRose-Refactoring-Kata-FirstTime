@@ -10,13 +10,16 @@ export class GildedRose {
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i];
-      if (item.isNotAgedBrieOrBackstageItem()) {
+
+      
+      
+      if (!item.isAgedBrieOrBackstageItem()) {
         if (item.quality > 0 && !item.isSulfurasItem()) {
           item.quality = item.quality - 1;
         }
       } 
       
-      if (!item.isNotAgedBrieOrBackstageItem() && item.isQualityMinor50()) {
+      if (item.isAgedBrieOrBackstageItem() && item.isQualityMinor50()) {
           this.processNotGenericAndWithQualityMinor50(item);
       }
       
