@@ -17,34 +17,41 @@ export class GildedRose {
 
       switch (item.name) {
         case SulfurasItemName: break;
-        default: {
-          if (!item.isAgedBrieOrBackstageItem()) {
-            if (item.quality > 0) {
-              item.quality = item.quality - 1;
+        case AgedBrieItemName:
+        case BackstagePassesItemName: {
+          if (item.isAgedBrieOrBackstageItem()) {
+            if (item.isQualityMinor50()) {
+              this.processNotGenericAndWithQualityMinor50(item);
             }
-          } 
-          
-          if (item.isAgedBrieOrBackstageItem() && item.isQualityMinor50()) {
-            this.processNotGenericAndWithQualityMinor50(item);
-          }
-          
-          
-          item.restSellInDay();
-          
-      
-          if (item.isSellInCeroDayLeft()) {
-            if (item.isAgedBrieItem()) {
-              if (item.isQualityMinor50()) {
+
+            item.restSellInDay();
+
+            if (item.isSellInCeroDayLeft()) {
+              if (item.isAgedBrieItem() && item.isPositiveQuality()) {
                 item.quality = item.quality + 1;
+                continue;
+              } 
+                
+              if (item.isBackstagePassesItem()) {
+                item.quality = 0;
+                continue;
               }
-              continue;
-            } 
               
-            if (item.isBackstagePassesItem()) {
-              item.quality = 0;
-              continue;
+              
             }
-            
+          }
+          break;
+        }
+        default: {
+          
+          if (item.quality > 0) {
+            item.quality = item.quality - 1;
+          }
+           
+
+          item.restSellInDay();
+
+          if (item.isSellInCeroDayLeft()) {              
             if (item.isPositiveQuality()) {
                 item.quality = item.quality - 1;
             }    
@@ -68,26 +75,5 @@ export class GildedRose {
       }
     }
   }
-
-  
-
-  /*private processWithisBadSellInDate(item: Item) {
-    if (item.isAgedBrieItem()) {
-      if (item.isQualityMinor50()) {
-        item.quality = item.quality + 1;
-      }
-      return;
-    } 
-      
-    if (item.isBackstagePassesItem()) {
-      item.quality = 0;
-      return;
-    }
-    
-    if (item.isPositiveQuality()) {
-        item.quality = item.quality - 1;
-    }
-    
-  }*/
 
 }
