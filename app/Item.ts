@@ -1,4 +1,4 @@
-import { AbstractItem, SulfurasItemName } from "./AbstractItem";
+import { AbstractItem } from "./AbstractItem";
 
 export class GenericItem extends AbstractItem {
   
@@ -17,16 +17,6 @@ export class GenericItem extends AbstractItem {
       this.decrementOneQualityLevel();    
     }
   }
-}
-
-export class SulfurasItem extends AbstractItem {
-  
-  constructor(sellIn, quality) {
-    super(SulfurasItemName, sellIn, quality);
-  }
-
-  public updateQualityMain() {}
-
 }
 
 
