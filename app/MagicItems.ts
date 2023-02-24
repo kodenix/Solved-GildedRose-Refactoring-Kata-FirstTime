@@ -1,4 +1,4 @@
-import { AbstractItem, AgedBrieItemName, BackstagePassesItemName } from "./Item";
+import { AbstractItem, AgedBrieItemName, BackstagePassesItemName } from "./AbstractItem";
 
 
 export class MagicItems extends AbstractItem {
