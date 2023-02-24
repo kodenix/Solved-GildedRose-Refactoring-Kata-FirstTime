@@ -13,21 +13,72 @@ export class Item {
     this.quality = quality;
   }
 
-  public updateQuality() { }
+  public updateQuality() {
+    switch (this.name) {
+      case SulfurasItemName: break;
+      case AgedBrieItemName:
+      case BackstagePassesItemName: {
+        if (this.isAgedBrieOrBackstageItem()) {
+          if (this.isQualityMinor50()) {
+            if (!this.isBackstagePassesItem()) {
+              this.incrementOneQualityLevel();
+            } else {
+              if (this.isSellInMinor11AndMayorEqual6()) {
+                this.incrementTwoQualityLevel();
+              }
+              if (this.isSellInMinor6()) {
+                this.incrementThreeQualityLevel();
+              }
+            }
+          }
+
+          this.restSellInDay();
+
+          if (this.isSellInCeroDayLeft()) {
+            if (this.isAgedBrieItem() && this.isPositiveQuality()) {
+              this.incrementOneQualityLevel();
+              break;
+            } 
+              
+            if (this.isBackstagePassesItem()) {
+              this.lostAllQuality();
+              break;
+            }
+            
+            
+          }
+        }
+        break;
+      }
+      default: {
+        
+        if (this.quality > 0) {
+          this.decrementOneQualityLevel();
+        }
+         
+        this.restSellInDay();
+
+        if (this.isSellInCeroDayLeft() && this.isPositiveQuality()) {              
+          this.decrementOneQualityLevel();    
+        }
+      }
+    }
+  }
+
+  public incrementQualityLevel(level: number) {
+    this.quality = this.quality + level;
+  }
 
   public incrementOneQualityLevel() {
-    this.quality = this.quality + 1;
+    this.incrementQualityLevel(1);
   }
 
   public incrementTwoQualityLevel() {
-    this.incrementOneQualityLevel();
-    this.incrementOneQualityLevel();
+    this.incrementQualityLevel(2);
   }
 
   public incrementThreeQualityLevel() {
-    this.incrementOneQualityLevel();
-    this.incrementOneQualityLevel();
-    this.incrementOneQualityLevel();
+    this.incrementQualityLevel(3);
   }
   
   public decrementOneQualityLevel() {
