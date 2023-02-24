@@ -21,7 +21,16 @@ export class GildedRose {
         case BackstagePassesItemName: {
           if (item.isAgedBrieOrBackstageItem()) {
             if (item.isQualityMinor50()) {
-              this.processNotGenericAndWithQualityMinor50(item);
+              if (!item.isBackstagePassesItem()) {
+                item.incrementOneQualityLevel();
+              } else {
+                if (item.isSellInMinor11AndMayorEqual6()) {
+                  item.incrementTwoQualityLevel();
+                }
+                if (item.isSellInMinor6()) {
+                  item.incrementThreeQualityLevel();
+                }
+              }
             }
 
             item.restSellInDay();
@@ -59,18 +68,6 @@ export class GildedRose {
     }
 
     return this.items;
-  }
-  
-  private processNotGenericAndWithQualityMinor50(item: Item) {
-    item.incrementOneQualityLevel();
-    if (item.isBackstagePassesItem() && item.isQualityMinor50()) {
-      if (item.isSellInMinor11()) {
-        item.incrementOneQualityLevel();
-      }
-      if (item.isSellInMinor6()) {
-        item.incrementOneQualityLevel();
-      }
-    }
   }
 
 }

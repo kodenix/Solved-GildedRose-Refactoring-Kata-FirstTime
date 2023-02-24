@@ -18,6 +18,17 @@ export class Item {
   public incrementOneQualityLevel() {
     this.quality = this.quality + 1;
   }
+
+  public incrementTwoQualityLevel() {
+    this.incrementOneQualityLevel();
+    this.incrementOneQualityLevel();
+  }
+
+  public incrementThreeQualityLevel() {
+    this.incrementOneQualityLevel();
+    this.incrementOneQualityLevel();
+    this.incrementOneQualityLevel();
+  }
   
   public decrementOneQualityLevel() {
     this.quality = this.quality - 1
@@ -47,8 +58,8 @@ export class Item {
     return this.sellIn < 6;
   }
 
-  public isSellInMinor11(): boolean {
-    return this.sellIn < 11;
+  public isSellInMinor11AndMayorEqual6(): boolean {
+    return this.sellIn >= 6 && this.sellIn < 11;
   }
 
   public isNotAgedBrieOrBackstageItem(): boolean {
